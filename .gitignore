@@ -1,3 +1,5 @@
 .DS_Store
 .railway/
 *.log
+__pycache__/
+*.pyc
