@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""Fetch writing from LessWrong + Substack and bake it into index.html at build time.
+"""Fetch writing from LessWrong + Substack and bake it into index.html.
 
-Dependency-free (stdlib only). Defensive by design: any network or parse failure
-leaves index.html untouched, so the page falls back to its "no posts yet" state.
-Run from the repo root (the Dockerfile does this), or: python build/fetch_posts.py
+Runs daily in the "Refresh writing" GitHub Action, which commits the result only
+when it changes; that push auto-deploys on Railway. Also runnable by hand:
+    python build/fetch_posts.py
+
+Dependency-free (stdlib only). Defensive by design: if every feed is unreachable
+the page is left exactly as-is, so an outage never wipes existing posts.
 """
 
 import json
@@ -96,19 +99,23 @@ def _fetch(url):
 
 
 def collect():
+    """Return (posts, any_success). any_success is False when every feed failed,
+    which lets the caller leave existing posts untouched during an outage."""
     all_posts = []
+    any_success = False
     for source, url in FEEDS:
         try:
             root = _fetch(url)
             got = _items_from(root, source)
             all_posts.extend(got)
+            any_success = True
             print(f"[fetch_posts] {source}: {len(got)} item(s)")
         except Exception as e:  # noqa: BLE001 - any failure just means skip this feed
             print(f"[fetch_posts] {source}: skipped ({e})")
     all_posts.sort(key=lambda p: p["_epoch"], reverse=True)
     for p in all_posts:
         p.pop("_epoch", None)
-    return all_posts[:MAX_POSTS]
+    return all_posts[:MAX_POSTS], any_success
 
 
 def inject(posts):
@@ -132,9 +139,12 @@ def inject(posts):
 
 def main():
     try:
-        posts = collect()
+        posts, any_success = collect()
     except Exception as e:  # noqa: BLE001
         print(f"[fetch_posts] collect failed, leaving page as-is ({e})")
+        return 0
+    if not any_success:
+        print("[fetch_posts] no feed reachable; leaving page unchanged")
         return 0
     try:
         inject(posts)
