@@ -6,6 +6,9 @@
 	header {
 		X-Content-Type-Options nosniff
 		Referrer-Policy strict-origin-when-cross-origin
+		# Revalidate on every visit (a cheap 304 via ETag) so a deploy shows up
+		# immediately instead of after the browser's heuristic cache expires.
+		Cache-Control "no-cache"
 		-Server
 	}
 }
