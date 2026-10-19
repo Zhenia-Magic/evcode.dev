@@ -180,6 +180,9 @@
   .figs .feature { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1.05fr; gap: 6px 22px; align-items: stretch; }
   .figs .feature .plate { margin: 0; order: 2; display: grid; align-items: center; padding: 26px 18px 14px; }
   .figs .feature .body { order: 1; padding: 10px 6px 0 10px; }
+  .figs .feature.flip { grid-template-columns: 1.05fr 1fr; }
+  .figs .feature.flip .plate { order: 0; }
+  .figs .feature.flip .body { padding: 10px 10px 0 6px; }
 
   /* svg viz */
   .viz text { font-family: var(--mono); font-size: 10.5px; fill: var(--faint); }
@@ -199,12 +202,6 @@
   .viz .bar-src { fill: var(--faint); fill-opacity: .55; }
   .viz .bar-root { fill: var(--accent); }
   .viz .grid-faint { stroke: var(--line); stroke-width: 1; }
-  .viz .spark-line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
-  .viz .spark-area { fill: url(#sparkfill); }
-  .viz .spark-dot { fill: var(--accent); }
-  .viz .spark-halo { fill: var(--accent); fill-opacity: .18; }
-  .viz .stop-a { stop-color: var(--accent); stop-opacity: .22; }
-  .viz .stop-b { stop-color: var(--accent); stop-opacity: 0; }
 
   /* ---------- experience ---------- */
   .xp { position: relative; }
@@ -286,9 +283,9 @@
     .intro { padding: 56px 0 24px; }
     .intro .lede { font-size: 16.5px; }
     .figs { grid-template-columns: 1fr; }
-    .figs .feature { grid-template-columns: 1fr; }
+    .figs .feature, .figs .feature.flip { grid-template-columns: 1fr; }
     .figs .feature .plate { order: 0; margin-bottom: 14px; }
-    .figs .feature .body { padding: 0 6px; }
+    .figs .feature .body, .figs .feature.flip .body { padding: 0 6px; }
     .viz text { font-size: 13.5px; } /* the figures scale down on phones; keep labels legible */
     .two { grid-template-columns: 1fr; gap: 34px; }
     .row { grid-template-columns: 1fr; gap: 8px; }
@@ -331,8 +328,7 @@
       <div class="nh"><span class="lab"><span class="pulse" aria-hidden="true"></span>now</span><span>updated oct 2026</span></div>
       <ul>
         <li><span class="k">research</span><span><b>SPAR</b>: evaluating AI auditors, with <b>Auditor-in-a-Box</b></span></li>
-        <li><span class="k">studying</span><span><b>Math for ML</b> + <b>Deep Learning</b> (deeplearning.ai)<span class="cur" aria-hidden="true"></span></span></li>
-        <li><span class="k">looking</span><span>for safety- and alignment-focused roles, remote</span></li>
+        <li><span class="k">looking</span><span>for safety- and alignment-focused roles, remote<span class="cur" aria-hidden="true"></span></span></li>
       </ul>
     </div>
   </section>
@@ -387,36 +383,9 @@
         </div>
       </figure>
 
-      <figure class="proj reveal">
+      <figure class="proj feature flip reveal">
         <div class="plate">
           <span class="fno">fig. 2</span>
-          <svg class="viz" viewBox="0 0 400 112" role="img" aria-label="Regulation entries tracked over time, rising as coverage grows across jurisdictions">
-            <defs><linearGradient id="sparkfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="stop-a"/><stop offset="1" class="stop-b"/></linearGradient></defs>
-            <line class="grid-faint" x1="0" y1="88" x2="400" y2="88"/>
-            <path class="spark-area" d="M8,81 L70,77 L132,66 L194,61 L256,44 L318,31 L386,15 L386,88 L8,88 Z"/>
-            <path class="spark-line" d="M8,81 L70,77 L132,66 L194,61 L256,44 L318,31 L386,15"/>
-            <circle class="spark-halo" cx="386" cy="15" r="9"/>
-            <circle class="spark-dot" cx="386" cy="15" r="4"/>
-            <text x="8" y="106">countries + all 50 U.S. states</text>
-          </svg>
-        </div>
-        <div class="body">
-          <div class="top">
-            <h3>AI Safety Regulation Map</h3>
-            <span class="status"><span class="dot" aria-hidden="true"></span>solo · live</span>
-          </div>
-          <p>An interactive tracker of AI-safety regulation and policy news across every country and all 50 U.S. states. A news feed refreshes daily; regulation entries are curated by hand so the map stays trustworthy rather than auto-scraped.</p>
-          <div class="stack"><span>Python</span><span>JavaScript</span><span>Angular</span></div>
-          <div class="foot">
-            <figcaption>fig. 2 · jurisdictions tracked</figcaption>
-            <a class="link" href="https://ai-safety-regulations.com">ai-safety-regulations.com <span class="ar">↗</span></a>
-          </div>
-        </div>
-      </figure>
-
-      <figure class="proj reveal">
-        <div class="plate">
-          <span class="fno">fig. 3</span>
           <svg class="viz" viewBox="0 0 400 112" role="img" aria-label="Twenty cited sources collapse to three independent evidence roots">
             <line class="grid-faint" x1="0" y1="88" x2="400" y2="88"/>
             <g>
@@ -445,7 +414,7 @@
           <p>A tool for contested research questions that weighs independent evidence instead of raw citation counts. It surfaces false consensus and source overlap, so twenty papers re-analysing one dataset count as one root, not twenty.</p>
           <div class="stack"><span>Python</span><span>JavaScript</span></div>
           <div class="foot">
-            <figcaption>fig. 3 · citations vs. independent roots</figcaption>
+            <figcaption>fig. 2 · citations vs. independent roots</figcaption>
             <a class="link" href="https://groundknowledge.org">groundknowledge.org <span class="ar">↗</span></a>
           </div>
         </div>
