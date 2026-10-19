@@ -10,7 +10,8 @@ Caddy on Railway.
   into the Writing section. Fails safe: if every feed is unreachable it leaves the page
   untouched, so an outage never wipes existing posts.
 - `.github/workflows/refresh-writing.yml` — runs the fetch script daily and commits only
-  when the writing changed.
+  when the writing changed. Each run also re-enables itself, because GitHub switches off
+  scheduled workflows after 60 days without repo activity.
 - `Dockerfile` / `Caddyfile` — serve `index.html` with Caddy on `$PORT`.
 
 ## How deploys work
@@ -25,6 +26,9 @@ railway up --detach --service evcode
 ```
 
 ## Adding writing
+
+While there are no posts, the Writing section and its nav link stay hidden; they appear on
+their own once the array below has an entry.
 
 Posts show up automatically within a day of publishing to LessWrong or Substack. To add
 one immediately, run `python build/fetch_posts.py` (or edit the `POSTS` array in

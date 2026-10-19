@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  actions: write # for the keepalive step below
 
 concurrency:
   group: refresh-writing
@@ -35,3 +36,9 @@ jobs:
           else
             echo "No writing changes."
           fi
+      # GitHub disables scheduled workflows after 60 days without repo activity (this
+      # one was, on 2026-09-22). Re-enabling it on every run resets that timer.
+      - name: Keep schedule alive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/refresh-writing.yml/enable"
