@@ -167,6 +167,11 @@
   figure.proj h3 { font-size: 19px; font-weight: 650; margin: 0; letter-spacing: -0.015em; }
   .status { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; color: var(--accent); background: var(--accent-soft); border-radius: 20px; padding: 3px 10px 3px 9px; white-space: nowrap; }
   .status .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .award { align-self: flex-start; display: inline-flex; align-items: center; gap: 7px; margin-bottom: 12px;
+    font-family: var(--mono); font-size: 11px; color: var(--ink); background: var(--paper);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius: 20px; padding: 3px 11px 3px 8px; }
+  .award svg { width: 12px; height: 12px; color: var(--accent); flex: none; }
+  @media (max-width: 480px) { .award .wide { display: none; } }
   figure.proj p { margin: 10px 0 0; font-size: 14.5px; color: var(--muted); text-wrap: pretty; }
   .stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
   .stack span { font-family: var(--mono); font-size: 11px; color: var(--muted); background: var(--chip); border-radius: 5px; padding: 2px 8px; }
@@ -407,6 +412,7 @@
           </svg>
         </div>
         <div class="body">
+          <div class="award"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.8 6.1 6.7.7-5 4.5 1.4 6.6L12 17l-5.9 3.4 1.4-6.6-5-4.5 6.7-.7z"/></svg>Community Award · FLF Epistack<span class="wide">&nbsp;competition</span></div>
           <div class="top">
             <h3>Ground Knowledge</h3>
             <span class="status"><span class="dot" aria-hidden="true"></span>solo · live</span>
